@@ -1,16 +1,20 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("leadForm");
-  if (!form) return;
+(function () {
+  const WEBHOOK_URL =
+    "https://services.leadconnectorhq.com/hooks/bu54Ewnaxt6xTe2Go5Tt/webhook-trigger/42b3ba91-233d-416b-97db-00085dbae5a3";
 
-  function setLoading(isLoading){
-    const submitBtn = document.querySelector('button[type="submit"]');
-    const loadingBtn = document.querySelector("button.loading");
-    if(!submitBtn || !loadingBtn) return;
+  function qs(sel, root) {
+    return (root || document).querySelector(sel);
+  }
+
+  function setLoading(isLoading, container) {
+    const submitBtn = qs('button[type="submit"]', container);
+    const loadingBtn = qs("button.loading", container);
+    if (!submitBtn || !loadingBtn) return;
     submitBtn.style.display = isLoading ? "none" : "block";
     loadingBtn.style.display = isLoading ? "block" : "none";
   }
 
-  function showSuccessPopup(){
+  function showSuccessPopup() {
     const overlay = document.createElement("div");
     overlay.style.position = "fixed";
     overlay.style.top = "0";
@@ -21,94 +25,110 @@ document.addEventListener("DOMContentLoaded", function () {
     overlay.style.display = "flex";
     overlay.style.alignItems = "center";
     overlay.style.justifyContent = "center";
-    overlay.style.zIndex = "9999";
+    overlay.style.zIndex = "999999";
 
     const modal = document.createElement("div");
     modal.style.background = "#fff";
-    modal.style.padding = "30px";
+    modal.style.padding = "28px";
     modal.style.borderRadius = "6px";
-    modal.style.maxWidth = "400px";
+    modal.style.maxWidth = "420px";
     modal.style.width = "90%";
     modal.style.textAlign = "center";
-    modal.style.fontFamily = "'Open Sans', Arial, sans-serif";
+    modal.style.fontFamily = "'Open Sans', Arial, Helvetica, sans-serif";
 
-    const title = document.createElement("h3");
-    title.innerText = "🎉 Inscrição enviada com sucesso!";
-    title.style.marginBottom = "15px";
+    const h = document.createElement("h3");
+    h.textContent = "🎉 Inscrição enviada com sucesso!";
+    h.style.margin = "0 0 12px 0";
+    h.style.fontSize = "22px";
 
-    const text = document.createElement("p");
-    text.innerText = "Recebemos os teus dados. Em breve vais receber as próximas instruções.";
+    const p = document.createElement("p");
+    p.textContent =
+      "Recebemos os teus dados. Em breve vais receber as próximas instruções.";
+    p.style.margin = "0";
 
-    const button = document.createElement("button");
-    button.innerText = "Fechar";
-    button.style.marginTop = "15px";
-    button.style.background = "#43a047";
-    button.style.border = "none";
-    button.style.color = "#fff";
-    button.style.padding = "10px 20px";
-    button.style.borderRadius = "4px";
-    button.style.cursor = "pointer";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Fechar";
+    btn.style.marginTop = "16px";
+    btn.style.background = "#43a047";
+    btn.style.border = "none";
+    btn.style.color = "#fff";
+    btn.style.padding = "10px 20px";
+    btn.style.borderRadius = "4px";
+    btn.style.cursor = "pointer";
+    btn.style.fontWeight = "700";
 
-    button.onclick = function(){
-      document.body.removeChild(overlay);
-    };
+    function close() {
+      if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    }
+    btn.addEventListener("click", close);
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) close();
+    });
 
-    overlay.onclick = function(e){
-      if(e.target === overlay){
-        document.body.removeChild(overlay);
-      }
-    };
-
-    modal.appendChild(title);
-    modal.appendChild(text);
-    modal.appendChild(button);
+    modal.appendChild(h);
+    modal.appendChild(p);
+    modal.appendChild(btn);
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
   }
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
+  function initOne(container) {
+    const form = qs("#leadForm", container);
+    if (!form) return;
 
-    const nameEl = document.getElementById("name");
-    const emailEl = document.getElementById("email");
-    const phoneEl = document.getElementById("phone");
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-    const n = (nameEl?.value || "").trim();
-    const m = (emailEl?.value || "").trim();
-    const p = (phoneEl?.value || "").trim();
+      const nameEl = qs("#name", container);
+      const emailEl = qs("#email", container);
+      const phoneEl = qs("#phone", container);
 
-    if (!n || !m || !p) {
-      alert("Por favor, preenche todos os campos.");
-      return;
-    }
+      const n = (nameEl && nameEl.value ? nameEl.value : "").trim();
+      const m = (emailEl && emailEl.value ? emailEl.value : "").trim();
+      const p = (phoneEl && phoneEl.value ? phoneEl.value : "").trim();
 
-    setLoading(true);
+      if (!n || !m || !p) {
+        alert("Por favor, preenche todos os campos.");
+        return;
+      }
 
-    const payload = {
-      name: n,
-      email: m,
-      phone: p,
-      source: "Desafio 14 Dias Barriga Definida",
-      timestamp: new Date().toISOString()
-    };
+      setLoading(true, container);
 
-    try {
-      await fetch(
-        "https://services.leadconnectorhq.com/hooks/bu54Ewnaxt6xTe2Go5Tt/webhook-trigger/42b3ba91-233d-416b-97db-00085dbae5a3",
-        {
+      const payload = {
+        name: n,
+        email: m,
+        phone: p,
+        source: "Desafio 14 Dias Barriga Definida",
+        timestamp: new Date().toISOString(),
+      };
+
+      try {
+        await fetch(WEBHOOK_URL, {
           method: "POST",
           mode: "no-cors",
-          body: JSON.stringify(payload)
-        }
-      );
+          body: JSON.stringify(payload),
+        });
 
-      form.reset();
-      setLoading(false);
-      showSuccessPopup();
+        form.reset();
+        setLoading(false, container);
+        showSuccessPopup();
+      } catch (err) {
+        setLoading(false, container);
+        alert("Ocorreu um erro ao processar o teu pedido. Por favor, tenta novamente.");
+      }
+    });
+  }
 
-    } catch (err) {
-      alert("Ocorreu um erro ao processar o teu pedido. Por favor, tenta novamente.");
-      setLoading(false);
-    }
-  });
-});
+  function init() {
+    // container do teu form (evita conflitos se existir mais do que um form na página)
+    const container = document.getElementById("mlb2-26506012") || document;
+    initOne(container);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
