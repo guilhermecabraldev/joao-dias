@@ -10,6 +10,62 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingBtn.style.display = isLoading ? "block" : "none";
   }
 
+  function showSuccessPopup(){
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0,0,0,0.5)";
+    overlay.style.display = "flex";
+    overlay.style.alignItems = "center";
+    overlay.style.justifyContent = "center";
+    overlay.style.zIndex = "9999";
+
+    const modal = document.createElement("div");
+    modal.style.background = "#fff";
+    modal.style.padding = "30px";
+    modal.style.borderRadius = "6px";
+    modal.style.maxWidth = "400px";
+    modal.style.width = "90%";
+    modal.style.textAlign = "center";
+    modal.style.fontFamily = "'Open Sans', Arial, sans-serif";
+
+    const title = document.createElement("h3");
+    title.innerText = "🎉 Inscrição enviada com sucesso!";
+    title.style.marginBottom = "15px";
+
+    const text = document.createElement("p");
+    text.innerText = "Recebemos os teus dados. Em breve vais receber as próximas instruções.";
+
+    const button = document.createElement("button");
+    button.innerText = "Fechar";
+    button.style.marginTop = "15px";
+    button.style.background = "#43a047";
+    button.style.border = "none";
+    button.style.color = "#fff";
+    button.style.padding = "10px 20px";
+    button.style.borderRadius = "4px";
+    button.style.cursor = "pointer";
+
+    button.onclick = function(){
+      document.body.removeChild(overlay);
+    };
+
+    overlay.onclick = function(e){
+      if(e.target === overlay){
+        document.body.removeChild(overlay);
+      }
+    };
+
+    modal.appendChild(title);
+    modal.appendChild(text);
+    modal.appendChild(button);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -46,22 +102,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       );
 
-      // Popup de sucesso
-      const modal = document.getElementById("successModal");
-      if (modal) modal.classList.add("show");
-
-      // Limpar form
       form.reset();
       setLoading(false);
+      showSuccessPopup();
+
     } catch (err) {
       alert("Ocorreu um erro ao processar o teu pedido. Por favor, tenta novamente.");
       setLoading(false);
     }
   });
 });
-
-// Função global para fechar o popup
-function closeSuccessModal(){
-  const modal = document.getElementById("successModal");
-  if (modal) modal.classList.remove("show");
-}
