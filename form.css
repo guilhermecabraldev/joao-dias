@@ -190,3 +190,23 @@
     display: none !important;
   }
 }
+
+/* Alinhar checkbox e texto na mesma linha */
+#mlb2-26506012 .ml-form-checkboxRow .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#mlb2-26506012 .ml-form-checkboxRow .checkbox input[type="checkbox"] {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+#mlb2-26506012 .ml-form-checkboxRow .label-description {
+  margin: 0;
+}
+
+#mlb2-26506012 .ml-form-checkboxRow .label-description p {
+  margin: 0;
+}
