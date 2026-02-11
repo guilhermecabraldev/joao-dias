@@ -2,6 +2,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("leadForm");
   if (!form) return;
 
+  function setLoading(isLoading){
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const loadingBtn = document.querySelector("button.loading");
+    if(!submitBtn || !loadingBtn) return;
+    submitBtn.style.display = isLoading ? "none" : "block";
+    loadingBtn.style.display = isLoading ? "block" : "none";
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -18,11 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const submitBtn = document.querySelector('button[type="submit"]');
-    const loadingBtn = document.querySelector("button.loading");
-
-    submitBtn.style.display = "none";
-    loadingBtn.style.display = "block";
+    setLoading(true);
 
     const payload = {
       name: n,
@@ -42,12 +46,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       );
 
-      document.querySelector(".row-form").style.display = "none";
-      document.querySelector(".ml-form-successBody").classList.add("show");
+      // Popup de sucesso
+      const modal = document.getElementById("successModal");
+      if (modal) modal.classList.add("show");
+
+      // Limpar form
+      form.reset();
+      setLoading(false);
     } catch (err) {
       alert("Ocorreu um erro ao processar o teu pedido. Por favor, tenta novamente.");
-      submitBtn.style.display = "block";
-      loadingBtn.style.display = "none";
+      setLoading(false);
     }
   });
 });
+
+// Função global para fechar o popup
+function closeSuccessModal(){
+  const modal = document.getElementById("successModal");
+  if (modal) modal.classList.remove("show");
+}
