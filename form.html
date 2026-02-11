@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário</title>
+
+<link rel="preconnect" href="https://assets.mlcdn.com">
+<link href="https://assets.mlcdn.com/fonts.css?version=1750852" rel="stylesheet">
+
+<style>
+
+/* ===== RESET BASE ===== */
+body{
+  margin:0;
+  padding:0;
+  font-family:"Open Sans", Arial, sans-serif;
+  background:#ffffff;
+}
+
+/* ===== CONTAINER ===== */
+#mlb2-26506012{
+  max-width:400px;
+  margin:0 auto;
+  padding:20px;
+  box-sizing:border-box;
+}
+
+/* ===== HEADER IMAGE ===== */
+.ml-form-embedHeader img{
+  max-width:100%;
+  display:block;
+  margin:0 auto 20px auto;
+}
+
+/* ===== TEXT CONTENT ===== */
+.ml-form-embedContent h4{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.ml-form-embedContent p{
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:10px;
+}
+
+/* ===== INPUTS ===== */
+.form-control{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  margin-bottom:12px;
+  font-size:14px;
+  box-sizing:border-box;
+}
+
+/* ===== CHECKBOX FIX DEFINITIVO ===== */
+.ml-form-checkboxRow{
+  margin:15px 0;
+}
+
+.ml-form-checkboxRow label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+
+.ml-form-checkboxRow input[type="checkbox"]{
+  margin:0;
+  width:16px;
+  height:16px;
+}
+
+.ml-form-checkboxRow p{
+  margin:0;
+  font-size:14px;
+}
+
+/* ===== BOTÃO ===== */
+.ml-form-embedSubmit button{
+  width:100%;
+  background:#5aa04f;
+  color:#ffffff;
+  border:none;
+  padding:14px;
+  border-radius:6px;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.ml-form-embedSubmit button:hover{
+  opacity:0.9;
+}
+
+/* ===== SUCCESS ===== */
+.row-success{
+  display:none;
+  text-align:center;
+}
+
+.row-success h4{
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="mlb2-26506012">
+
+  <div class="ml-form-embedHeader">
+    <img src="https://storage.mlcdn.com/account_image/567078/S6M7DDm387wrwbEKrwDIiMUNnI4y9oKZkk8S4Oly.png" alt="">
+  </div>
+
+  <div class="row-form">
+
+    <div class="ml-form-embedContent">
+      <h4>
+        Transforma o teu corpo e dá o primeiro passo rumo a uma barriga definida
+        com um plano simples, realista e eficaz !
+      </h4>
+
+      <p>📌 O que recebes:</p>
+
+      <p>
+        ✅ Plano de treino prático e progressivo<br>
+        ✅ Guia alimentar ajustável ao teu dia-a-dia<br>
+        ✅ Motivação diária por email<br>
+        ✅ Zero cardio infinito ou dietas malucas<br><br>
+        💡 Estás apenas a um clique de começar !
+      </p>
+    </div>
+
+    <form
+      action="https://assets.mailerlite.com/jsonp/567078/forms/155575857373512889/subscribe"
+      method="post"
+      target="_blank"
+    >
+
+      <input
+        type="email"
+        class="form-control"
+        name="fields[email]"
+        placeholder="Email"
+        required
+      >
+
+      <input
+        type="text"
+        class="form-control"
+        name="fields[phone]"
+        placeholder="Nº Telemóvel"
+        required
+      >
+
+      <div class="ml-form-checkboxRow">
+        <label>
+          <input type="checkbox" name="ml-consent" value="1" required>
+          <p>Subscreve para novidades !</p>
+        </label>
+      </div>
+
+      <div class="ml-form-embedSubmit">
+        <button type="submit">COMEÇA AGORA !</button>
+      </div>
+
+      <input type="hidden" name="ml-submit" value="1">
+      <input type="hidden" name="anticsrf" value="true">
+
+    </form>
+  </div>
+
+  <div class="row-success">
+    <h4>🎉 Estás quase dentro do desafio !</h4>
+    <p>Vai ao teu email e confirma a inscrição.</p>
+  </div>
+
+</div>
+
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js"></script>
+
+<script>
+function ml_webform_success_26506012() {
+  document.querySelector('.row-success').style.display='block';
+  document.querySelector('.row-form').style.display='none';
+}
+</script>
+
+</body>
+</html>
